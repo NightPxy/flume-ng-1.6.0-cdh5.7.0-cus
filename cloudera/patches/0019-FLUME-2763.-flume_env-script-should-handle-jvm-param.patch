@@ -1,0 +1,37 @@
+From 8de1cc9f477c0fbec16e20995358cc7f401ec868 Mon Sep 17 00:00:00 2001
+From: Johny Rufus <johnyrufus@apache.org>
+Date: Thu, 20 Aug 2015 08:11:13 -0700
+Subject: [PATCH 19/37] FLUME-2763. flume_env script should handle jvm
+ parameters like -javaagent -agentpath -agentlib
+
+( Philip Zeyliger, Neerja Khattar via Johny Rufus)
+---
+ bin/flume-ng |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/bin/flume-ng b/bin/flume-ng
+index a2db578..f0206fd 100755
+--- a/bin/flume-ng
++++ b/bin/flume-ng
+@@ -324,6 +324,18 @@ while [ -n "$*" ] ; do
+       opt_plugins_dirs=$1
+       shift
+       ;;
++    -agentlib*)
++      arr_java_props[arr_java_props_ct]=$arg
++      ((++arr_java_props_ct))
++      ;;
++    -agentpath*)
++      arr_java_props[arr_java_props_ct]=$arg
++      ((++arr_java_props_ct))
++      ;;
++    -javaagent*)
++      arr_java_props[arr_java_props_ct]=$arg
++      ((++arr_java_props_ct))
++      ;;
+     -D*)
+       arr_java_props[arr_java_props_ct]=$arg
+       ((++arr_java_props_ct))
+-- 
+1.7.9.5
+

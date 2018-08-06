@@ -1,0 +1,26 @@
+From 0c99387e9502581f361b2b5dc34f4b5bc3235cac Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Fri, 9 Oct 2015 08:01:34 -0700
+Subject: [PATCH 27/37] CLOUDERA-BUILD. Add pre-commit test script
+
+Change-Id: Ia64587e009d212b32c2dea888426e2dc8e627fa4
+---
+ cloudera/pre_commit_hook.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 cloudera/pre_commit_hook.sh
+
+diff --git a/cloudera/pre_commit_hook.sh b/cloudera/pre_commit_hook.sh
+new file mode 100644
+index 0000000..e5c82e6
+--- /dev/null
++++ b/cloudera/pre_commit_hook.sh
+@@ -0,0 +1,6 @@
++# CLOUDERA-BUILD
++export JAVA7_BUILD=true
++. /opt/toolchain/toolchain.sh
++
++export MAVEN_OPTS="-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m"
++mvn clean test -Dhadoop.profile=hbase-98
+-- 
+1.7.9.5
+

@@ -1,0 +1,86 @@
+From 05cf76f13cab47016ce24b70ca5c66c7546c5357 Mon Sep 17 00:00:00 2001
+From: Hari Shreedharan <hshreedharan@apache.org>
+Date: Tue, 7 Jul 2015 21:44:01 -0700
+Subject: [PATCH 06/37] FLUME-2732. Make maximum tolerated failures before
+ shutting down and recreating client in AsyncHbaseSink
+ configurable
+
+(Johny Rufus via Hari)
+---
+ .../apache/flume/sink/hbase/AsyncHBaseSink.java    |   11 ++++++++---
+ .../hbase/HBaseSinkConfigurationConstants.java     |    4 ++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/AsyncHBaseSink.java b/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/AsyncHBaseSink.java
+index 1d05189..80a3484 100644
+--- a/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/AsyncHBaseSink.java
++++ b/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/AsyncHBaseSink.java
+@@ -126,6 +126,7 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+   private boolean enableWal = true;
+   private boolean batchIncrements = false;
+   private volatile int totalCallbacksReceived = 0;
++  private int maxConsecutiveFails;
+   private Map<CellIdentifier, AtomicIncrementRequest> incrementBuffer;
+   // The HBaseClient buffers the requests until a callback is received. In the event of a
+   // timeout, there is no way to clear these buffers. If there is a major cluster issue, this
+@@ -140,8 +141,6 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+   private final Comparator<byte[]> COMPARATOR = UnsignedBytes
+     .lexicographicalComparator();
+ 
+-  private static final int MAX_CONSECUTIVE_FAILS = 10;
+-
+   public AsyncHBaseSink(){
+     this(null);
+   }
+@@ -417,6 +416,10 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+       logger.info("Increment coalescing is enabled. Increments will be " +
+         "buffered.");
+     }
++
++    maxConsecutiveFails = context.getInteger(HBaseSinkConfigurationConstants.CONFIG_MAX_CONSECUTIVE_FAILS,
++            HBaseSinkConfigurationConstants.DEFAULT_MAX_CONSECUTIVE_FAILS);
++
+   }
+ 
+   @VisibleForTesting
+@@ -442,6 +445,7 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+   }
+ 
+   private HBaseClient initHBaseClient() {
++    logger.info("Initializing HBase Client");
+     if (!isTimeoutTest) {
+       client = new HBaseClient(zkQuorum, zkBaseDir, sinkCallbackPool);
+     } else {
+@@ -526,6 +530,7 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+   }
+ 
+   private void shutdownHBaseClient() {
++    logger.info("Shutting down HBase Client");
+     final CountDownLatch waiter = new CountDownLatch(1);
+     try {
+       client.shutdown().addCallback(new Callback<Object, Object>() {
+@@ -556,7 +561,7 @@ public class AsyncHBaseSink extends AbstractSink implements Configurable {
+ 
+   private void handleTransactionFailure(Transaction txn)
+       throws EventDeliveryException {
+-    if (consecutiveHBaseFailures >= MAX_CONSECUTIVE_FAILS) {
++    if (maxConsecutiveFails > 0 && consecutiveHBaseFailures >= maxConsecutiveFails) {
+       if (client != null) {
+         shutdownHBaseClient();
+       }
+diff --git a/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/HBaseSinkConfigurationConstants.java b/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/HBaseSinkConfigurationConstants.java
+index 1a78071..5560624 100644
+--- a/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/HBaseSinkConfigurationConstants.java
++++ b/flume-ng-sinks/flume-ng-hbase-sink/src/main/java/org/apache/flume/sink/hbase/HBaseSinkConfigurationConstants.java
+@@ -70,4 +70,8 @@ public class HBaseSinkConfigurationConstants {
+ 
+   public static final Boolean DEFAULT_COALESCE_INCREMENTS = false;
+ 
++  public static final int DEFAULT_MAX_CONSECUTIVE_FAILS = 10;
++
++  public static final String CONFIG_MAX_CONSECUTIVE_FAILS = "maxConsecutiveFails";
++
+ }
+-- 
+1.7.9.5
+

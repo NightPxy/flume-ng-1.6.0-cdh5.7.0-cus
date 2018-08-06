@@ -1,0 +1,721 @@
+From d0b23b343f07e41b8782574ec483bb3ee399be42 Mon Sep 17 00:00:00 2001
+From: Jenkins <dev-kitchen@cloudera.com>
+Date: Fri, 4 Sep 2015 15:15:34 -0700
+Subject: [PATCH 18/37] Updating Maven version to 5.7.0-SNAPSHOT
+
+---
+ flume-ng-auth/pom.xml                              |    2 +-
+ flume-ng-channels/flume-file-channel/pom.xml       |    2 +-
+ flume-ng-channels/flume-jdbc-channel/pom.xml       |    2 +-
+ flume-ng-channels/flume-kafka-channel/pom.xml      |    2 +-
+ .../flume-spillable-memory-channel/pom.xml         |    2 +-
+ flume-ng-channels/pom.xml                          |    2 +-
+ flume-ng-clients/flume-ng-log4jappender/pom.xml    |    2 +-
+ flume-ng-clients/pom.xml                           |    2 +-
+ flume-ng-configuration/pom.xml                     |    2 +-
+ flume-ng-core/pom.xml                              |    2 +-
+ flume-ng-dist/pom.xml                              |    2 +-
+ flume-ng-embedded-agent/pom.xml                    |    2 +-
+ flume-ng-legacy-sources/flume-avro-source/pom.xml  |    2 +-
+ .../flume-thrift-source/pom.xml                    |    2 +-
+ flume-ng-legacy-sources/pom.xml                    |    2 +-
+ flume-ng-node/pom.xml                              |    2 +-
+ flume-ng-sdk/pom.xml                               |    2 +-
+ flume-ng-sinks/flume-dataset-sink/pom.xml          |    2 +-
+ flume-ng-sinks/flume-hdfs-sink/pom.xml             |    2 +-
+ flume-ng-sinks/flume-hive-sink/pom.xml             |    2 +-
+ flume-ng-sinks/flume-irc-sink/pom.xml              |    2 +-
+ flume-ng-sinks/flume-ng-elasticsearch-sink/pom.xml |    2 +-
+ flume-ng-sinks/flume-ng-hbase-sink/pom.xml         |    2 +-
+ flume-ng-sinks/flume-ng-kafka-sink/pom.xml         |    2 +-
+ .../flume-ng-morphline-solr-sink/pom.xml           |    4 +-
+ flume-ng-sinks/pom.xml                             |    2 +-
+ flume-ng-sources/flume-jms-source/pom.xml          |    2 +-
+ flume-ng-sources/flume-kafka-source/pom.xml        |    2 +-
+ flume-ng-sources/flume-scribe-source/pom.xml       |    2 +-
+ flume-ng-sources/flume-taildir-source/pom.xml      |    2 +-
+ flume-ng-sources/flume-twitter-source/pom.xml      |    2 +-
+ flume-ng-sources/pom.xml                           |    2 +-
+ flume-ng-tests/pom.xml                             |    2 +-
+ flume-tools/pom.xml                                |    2 +-
+ pom.xml                                            |   62 ++++++++++----------
+ 35 files changed, 66 insertions(+), 66 deletions(-)
+
+diff --git a/flume-ng-auth/pom.xml b/flume-ng-auth/pom.xml
+index 0077952..bcf0ef8 100644
+--- a/flume-ng-auth/pom.xml
++++ b/flume-ng-auth/pom.xml
+@@ -20,7 +20,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-auth</artifactId>
+diff --git a/flume-ng-channels/flume-file-channel/pom.xml b/flume-ng-channels/flume-file-channel/pom.xml
+index 30d6641..b871e1c 100644
+--- a/flume-ng-channels/flume-file-channel/pom.xml
++++ b/flume-ng-channels/flume-file-channel/pom.xml
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>flume-ng-channels</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-channels</groupId>
+diff --git a/flume-ng-channels/flume-jdbc-channel/pom.xml b/flume-ng-channels/flume-jdbc-channel/pom.xml
+index ae8545f..d30599d 100644
+--- a/flume-ng-channels/flume-jdbc-channel/pom.xml
++++ b/flume-ng-channels/flume-jdbc-channel/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-channels</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-channels</groupId>
+diff --git a/flume-ng-channels/flume-kafka-channel/pom.xml b/flume-ng-channels/flume-kafka-channel/pom.xml
+index b281a1d..547ab3e 100644
+--- a/flume-ng-channels/flume-kafka-channel/pom.xml
++++ b/flume-ng-channels/flume-kafka-channel/pom.xml
+@@ -19,7 +19,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-channels</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+ 
+diff --git a/flume-ng-channels/flume-spillable-memory-channel/pom.xml b/flume-ng-channels/flume-spillable-memory-channel/pom.xml
+index 9fdfcc4..15d3742 100644
+--- a/flume-ng-channels/flume-spillable-memory-channel/pom.xml
++++ b/flume-ng-channels/flume-spillable-memory-channel/pom.xml
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>flume-ng-channels</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-channels</groupId>
+diff --git a/flume-ng-channels/pom.xml b/flume-ng-channels/pom.xml
+index 0d3b184..c640a50 100644
+--- a/flume-ng-channels/pom.xml
++++ b/flume-ng-channels/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/flume-ng-clients/flume-ng-log4jappender/pom.xml b/flume-ng-clients/flume-ng-log4jappender/pom.xml
+index db83236..b24659e 100644
+--- a/flume-ng-clients/flume-ng-log4jappender/pom.xml
++++ b/flume-ng-clients/flume-ng-log4jappender/pom.xml
+@@ -19,7 +19,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-clients</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+     <relativePath>..</relativePath>
+   </parent>
+ 
+diff --git a/flume-ng-clients/pom.xml b/flume-ng-clients/pom.xml
+index b3aeecb..e4e92bf 100644
+--- a/flume-ng-clients/pom.xml
++++ b/flume-ng-clients/pom.xml
+@@ -19,7 +19,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+     <relativePath>..</relativePath>
+   </parent>
+   <artifactId>flume-ng-clients</artifactId>
+diff --git a/flume-ng-configuration/pom.xml b/flume-ng-configuration/pom.xml
+index 416a89f..bab7162 100644
+--- a/flume-ng-configuration/pom.xml
++++ b/flume-ng-configuration/pom.xml
+@@ -19,7 +19,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+     <relativePath>..</relativePath>
+   </parent>
+   <artifactId>flume-ng-configuration</artifactId>
+diff --git a/flume-ng-core/pom.xml b/flume-ng-core/pom.xml
+index 2ce3983..253b199 100644
+--- a/flume-ng-core/pom.xml
++++ b/flume-ng-core/pom.xml
+@@ -21,7 +21,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/flume-ng-dist/pom.xml b/flume-ng-dist/pom.xml
+index 7b62005..9623ac9 100644
+--- a/flume-ng-dist/pom.xml
++++ b/flume-ng-dist/pom.xml
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-dist</artifactId>
+diff --git a/flume-ng-embedded-agent/pom.xml b/flume-ng-embedded-agent/pom.xml
+index cd59418..b8220da 100644
+--- a/flume-ng-embedded-agent/pom.xml
++++ b/flume-ng-embedded-agent/pom.xml
+@@ -20,7 +20,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-embedded-agent</artifactId>
+diff --git a/flume-ng-legacy-sources/flume-avro-source/pom.xml b/flume-ng-legacy-sources/flume-avro-source/pom.xml
+index a4d1676..11a321b 100644
+--- a/flume-ng-legacy-sources/flume-avro-source/pom.xml
++++ b/flume-ng-legacy-sources/flume-avro-source/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-legacy-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-legacy-sources</groupId>
+diff --git a/flume-ng-legacy-sources/flume-thrift-source/pom.xml b/flume-ng-legacy-sources/flume-thrift-source/pom.xml
+index 435fb42..a75eece 100644
+--- a/flume-ng-legacy-sources/flume-thrift-source/pom.xml
++++ b/flume-ng-legacy-sources/flume-thrift-source/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-legacy-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-legacy-sources</groupId>
+diff --git a/flume-ng-legacy-sources/pom.xml b/flume-ng-legacy-sources/pom.xml
+index b2b9901..3ca3f51 100644
+--- a/flume-ng-legacy-sources/pom.xml
++++ b/flume-ng-legacy-sources/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/flume-ng-node/pom.xml b/flume-ng-node/pom.xml
+index dc853da..c865511 100644
+--- a/flume-ng-node/pom.xml
++++ b/flume-ng-node/pom.xml
+@@ -24,7 +24,7 @@
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-node</artifactId>
+diff --git a/flume-ng-sdk/pom.xml b/flume-ng-sdk/pom.xml
+index a917520..60e03be 100644
+--- a/flume-ng-sdk/pom.xml
++++ b/flume-ng-sdk/pom.xml
+@@ -20,7 +20,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-sdk</artifactId>
+diff --git a/flume-ng-sinks/flume-dataset-sink/pom.xml b/flume-ng-sinks/flume-dataset-sink/pom.xml
+index 223bea9..b053892 100644
+--- a/flume-ng-sinks/flume-dataset-sink/pom.xml
++++ b/flume-ng-sinks/flume-dataset-sink/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+diff --git a/flume-ng-sinks/flume-hdfs-sink/pom.xml b/flume-ng-sinks/flume-hdfs-sink/pom.xml
+index 8d1c592..84a5648 100644
+--- a/flume-ng-sinks/flume-hdfs-sink/pom.xml
++++ b/flume-ng-sinks/flume-hdfs-sink/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+diff --git a/flume-ng-sinks/flume-hive-sink/pom.xml b/flume-ng-sinks/flume-hive-sink/pom.xml
+index a396c11..94c3275 100644
+--- a/flume-ng-sinks/flume-hive-sink/pom.xml
++++ b/flume-ng-sinks/flume-hive-sink/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <groupId>org.apache.flume</groupId>
+     <artifactId>flume-ng-sinks</artifactId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+diff --git a/flume-ng-sinks/flume-irc-sink/pom.xml b/flume-ng-sinks/flume-irc-sink/pom.xml
+index 776f636..e685817 100644
+--- a/flume-ng-sinks/flume-irc-sink/pom.xml
++++ b/flume-ng-sinks/flume-irc-sink/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+diff --git a/flume-ng-sinks/flume-ng-elasticsearch-sink/pom.xml b/flume-ng-sinks/flume-ng-elasticsearch-sink/pom.xml
+index d427769..d34542f 100644
+--- a/flume-ng-sinks/flume-ng-elasticsearch-sink/pom.xml
++++ b/flume-ng-sinks/flume-ng-elasticsearch-sink/pom.xml
+@@ -16,7 +16,7 @@
+  <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+diff --git a/flume-ng-sinks/flume-ng-hbase-sink/pom.xml b/flume-ng-sinks/flume-ng-hbase-sink/pom.xml
+index 2e2360c..996d183 100644
+--- a/flume-ng-sinks/flume-ng-hbase-sink/pom.xml
++++ b/flume-ng-sinks/flume-ng-hbase-sink/pom.xml
+@@ -14,7 +14,7 @@
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+   <artifactId>flume-ng-hbase-sink</artifactId>
+diff --git a/flume-ng-sinks/flume-ng-kafka-sink/pom.xml b/flume-ng-sinks/flume-ng-kafka-sink/pom.xml
+index a109787..2e993ac 100644
+--- a/flume-ng-sinks/flume-ng-kafka-sink/pom.xml
++++ b/flume-ng-sinks/flume-ng-kafka-sink/pom.xml
+@@ -14,7 +14,7 @@
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+   <artifactId>flume-ng-kafka-sink</artifactId>
+diff --git a/flume-ng-sinks/flume-ng-morphline-solr-sink/pom.xml b/flume-ng-sinks/flume-ng-morphline-solr-sink/pom.xml
+index 0be0cb7..17fc24c 100644
+--- a/flume-ng-sinks/flume-ng-morphline-solr-sink/pom.xml
++++ b/flume-ng-sinks/flume-ng-morphline-solr-sink/pom.xml
+@@ -21,12 +21,12 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sinks</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sinks</groupId>
+   <artifactId>flume-ng-morphline-solr-sink</artifactId>
+-  <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++  <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   <name>Flume NG Morphline Solr Sink</name>
+ 
+   <properties>
+diff --git a/flume-ng-sinks/pom.xml b/flume-ng-sinks/pom.xml
+index 9e95790..509ab6f 100644
+--- a/flume-ng-sinks/pom.xml
++++ b/flume-ng-sinks/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/flume-ng-sources/flume-jms-source/pom.xml b/flume-ng-sources/flume-jms-source/pom.xml
+index 3fe4fab..4a87fb4 100644
+--- a/flume-ng-sources/flume-jms-source/pom.xml
++++ b/flume-ng-sources/flume-jms-source/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sources</groupId>
+diff --git a/flume-ng-sources/flume-kafka-source/pom.xml b/flume-ng-sources/flume-kafka-source/pom.xml
+index 777d0ed..4bfad8a 100644
+--- a/flume-ng-sources/flume-kafka-source/pom.xml
++++ b/flume-ng-sources/flume-kafka-source/pom.xml
+@@ -20,7 +20,7 @@
+   <parent>
+     <artifactId>flume-ng-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+ 
+diff --git a/flume-ng-sources/flume-scribe-source/pom.xml b/flume-ng-sources/flume-scribe-source/pom.xml
+index 702357b..fb30233 100644
+--- a/flume-ng-sources/flume-scribe-source/pom.xml
++++ b/flume-ng-sources/flume-scribe-source/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sources</groupId>
+diff --git a/flume-ng-sources/flume-taildir-source/pom.xml b/flume-ng-sources/flume-taildir-source/pom.xml
+index ed664ac..d3b67df 100644
+--- a/flume-ng-sources/flume-taildir-source/pom.xml
++++ b/flume-ng-sources/flume-taildir-source/pom.xml
+@@ -23,7 +23,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sources</groupId>
+diff --git a/flume-ng-sources/flume-twitter-source/pom.xml b/flume-ng-sources/flume-twitter-source/pom.xml
+index 4b2bff2..59e9b87 100644
+--- a/flume-ng-sources/flume-twitter-source/pom.xml
++++ b/flume-ng-sources/flume-twitter-source/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-ng-sources</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume.flume-ng-sources</groupId>
+diff --git a/flume-ng-sources/pom.xml b/flume-ng-sources/pom.xml
+index 6b5bc7d..7854680 100644
+--- a/flume-ng-sources/pom.xml
++++ b/flume-ng-sources/pom.xml
+@@ -22,7 +22,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/flume-ng-tests/pom.xml b/flume-ng-tests/pom.xml
+index b662e51..e88e7d7 100644
+--- a/flume-ng-tests/pom.xml
++++ b/flume-ng-tests/pom.xml
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <artifactId>flume-ng-tests</artifactId>
+diff --git a/flume-tools/pom.xml b/flume-tools/pom.xml
+index 2eb3e86..c364523 100644
+--- a/flume-tools/pom.xml
++++ b/flume-tools/pom.xml
+@@ -23,7 +23,7 @@ limitations under the License.
+   <parent>
+     <artifactId>flume-parent</artifactId>
+     <groupId>org.apache.flume</groupId>
+-    <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++    <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <groupId>org.apache.flume</groupId>
+diff --git a/pom.xml b/pom.xml
+index bc79bcf..7eac294 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -20,13 +20,13 @@ limitations under the License.
+   <parent>
+     <groupId>com.cloudera.cdh</groupId>
+     <artifactId>cdh-root</artifactId>
+-    <version>5.5.0-SNAPSHOT</version>
++    <version>5.7.0-SNAPSHOT</version>
+   </parent>
+ 
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.apache.flume</groupId>
+   <artifactId>flume-parent</artifactId>
+-  <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++  <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+ 
+   <name>Apache Flume</name>
+@@ -1214,150 +1214,150 @@ limitations under the License.
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-configuration</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-core</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-tools</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-node</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-channels</groupId>
+         <artifactId>flume-file-channel</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-channels</groupId>
+         <artifactId>flume-jdbc-channel</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-channels</groupId>
+         <artifactId>flume-kafka-channel</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-channels</groupId>
+         <artifactId>flume-spillable-memory-channel</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+      <dependency>
+        <groupId>org.apache.flume.flume-ng-channels</groupId>
+        <artifactId>flume-recoverable-memory-channel</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+      </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-hdfs-sink</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-hive-sink</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-irc-sink</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-ng-hbase-sink</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-ng-elasticsearch-sink</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-ng-morphline-solr-sink</artifactId>
+-       <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++       <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sinks</groupId>
+         <artifactId>flume-ng-kafka-sink</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sources</groupId>
+         <artifactId>flume-scribe-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sources</groupId>
+         <artifactId>flume-jms-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sources</groupId>
+         <artifactId>flume-twitter-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-legacy-sources</groupId>
+         <artifactId>flume-thrift-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sources</groupId>
+         <artifactId>flume-kafka-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-legacy-sources</groupId>
+         <artifactId>flume-avro-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-sdk</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-sources</groupId>
+         <artifactId>flume-taildir-source</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-sdk</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+         <classifier>tests</classifier>
+         <scope>test</scope>
+       </dependency>
+@@ -1365,26 +1365,26 @@ limitations under the License.
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-auth</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-clients</groupId>
+         <artifactId>flume-ng-log4jappender</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume.flume-ng-clients</groupId>
+         <artifactId>flume-ng-log4jappender</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+         <classifier>jar-with-dependencies</classifier>
+       </dependency>
+ 
+       <dependency>
+         <groupId>org.apache.flume</groupId>
+         <artifactId>flume-ng-embedded-agent</artifactId>
+-        <version>1.6.0-cdh5.5.0-SNAPSHOT</version>
++        <version>1.6.0-cdh5.7.0-SNAPSHOT</version>
+       </dependency>
+ 
+       <dependency>
+-- 
+1.7.9.5
+

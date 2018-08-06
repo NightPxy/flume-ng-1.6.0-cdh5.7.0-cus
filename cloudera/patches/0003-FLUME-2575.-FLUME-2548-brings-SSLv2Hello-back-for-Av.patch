@@ -1,0 +1,28 @@
+From 2849e8b934dce080be6a4562af40d0cb0a7f91b7 Mon Sep 17 00:00:00 2001
+From: Johny Rufus <johnyrufus@apache.org>
+Date: Fri, 3 Jul 2015 11:22:38 -0700
+Subject: [PATCH 03/37] FLUME-2575. FLUME-2548 brings SSLv2Hello back for Avro
+ Sink, but UG says it is one of the protocols to
+ exclude
+
+    (Li Xiang via Johny Rufus)
+---
+ flume-ng-doc/sphinx/FlumeUserGuide.rst |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/flume-ng-doc/sphinx/FlumeUserGuide.rst b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+index e04fd50..9eafa60 100644
+--- a/flume-ng-doc/sphinx/FlumeUserGuide.rst
++++ b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+@@ -1952,7 +1952,7 @@ trust-all-certs              false
+ truststore                   --                                                     The path to a custom Java truststore file. Flume uses the certificate authority information in this file to determine whether the remote Avro Source's SSL authentication credentials should be trusted. If not specified, the default Java JSSE certificate authority files (typically "jssecacerts" or "cacerts" in the Oracle JRE) will be used.
+ truststore-password          --                                                     The password for the specified truststore.
+ truststore-type              JKS                                                    The type of the Java truststore. This can be "JKS" or other supported Java truststore type.
+-exclude-protocols            SSLv2Hello SSLv3                                       Space-separated list of SSL/TLS protocols to exclude
++exclude-protocols            SSLv3                                                  Space-separated list of SSL/TLS protocols to exclude. SSLv3 will always be excluded in addition to the protocols specified.
+ maxIoWorkers                 2 * the number of available processors in the machine  The maximum number of I/O worker threads. This is configured on the NettyAvroRpcClient NioClientSocketChannelFactory.
+ ==========================   =====================================================  ===========================================================================================
+ 
+-- 
+1.7.9.5
+

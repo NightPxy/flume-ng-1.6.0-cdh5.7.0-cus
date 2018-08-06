@@ -1,0 +1,26 @@
+From 85fd2449e99ed4d19d124a23874b58942653e0c3 Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Wed, 30 Sep 2015 09:20:29 -0700
+Subject: [PATCH 25/37] FLUME-2751: Upgrade Derby version to 10.11.1.1
+
+(Johny Rufus via Jarek Jarcec Cecho)
+---
+ pom.xml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pom.xml b/pom.xml
+index 7eac294..3190f61 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1140,7 +1140,7 @@ limitations under the License.
+       <dependency>
+         <groupId>org.apache.derby</groupId>
+         <artifactId>derby</artifactId>
+-        <version>10.8.2.2</version>
++        <version>10.11.1.1</version>
+       </dependency>
+ 
+       <dependency>
+-- 
+1.7.9.5
+

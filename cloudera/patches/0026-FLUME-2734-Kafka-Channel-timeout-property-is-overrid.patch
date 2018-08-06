@@ -1,0 +1,72 @@
+From 5e08d741626307528f8410ea6b772f8bb8160dbc Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Wed, 30 Sep 2015 09:34:31 -0700
+Subject: [PATCH 26/37] FLUME-2734: Kafka Channel timeout property is
+ overridden by default value
+
+(Johny Rufus via Jarek Jarcec Cecho)
+---
+ .../apache/flume/channel/kafka/KafkaChannel.java   |    5 +++--
+ .../flume/channel/kafka/TestKafkaChannel.java      |   18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/flume-ng-channels/flume-kafka-channel/src/main/java/org/apache/flume/channel/kafka/KafkaChannel.java b/flume-ng-channels/flume-kafka-channel/src/main/java/org/apache/flume/channel/kafka/KafkaChannel.java
+index 80a122d..c83d4f6 100644
+--- a/flume-ng-channels/flume-kafka-channel/src/main/java/org/apache/flume/channel/kafka/KafkaChannel.java
++++ b/flume-ng-channels/flume-kafka-channel/src/main/java/org/apache/flume/channel/kafka/KafkaChannel.java
+@@ -177,13 +177,14 @@ public class KafkaChannel extends BasicChannelSemantics {
+       throw new ConfigurationException(
+         "Zookeeper Connection must be specified");
+     }
+-    Long timeout = ctx.getLong(TIMEOUT, Long.valueOf(DEFAULT_TIMEOUT));
+     kafkaConf.putAll(ctx.getSubProperties(KAFKA_PREFIX));
+     kafkaConf.put(GROUP_ID, groupId);
+     kafkaConf.put(BROKER_LIST_KEY, brokerList);
+     kafkaConf.put(ZOOKEEPER_CONNECT, zkConnect);
+     kafkaConf.put(AUTO_COMMIT_ENABLED, String.valueOf(false));
+-    kafkaConf.put(CONSUMER_TIMEOUT, String.valueOf(timeout));
++    if(kafkaConf.get(CONSUMER_TIMEOUT) == null) {
++      kafkaConf.put(CONSUMER_TIMEOUT, DEFAULT_TIMEOUT);
++    }
+     kafkaConf.put(REQUIRED_ACKS_KEY, "-1");
+     LOGGER.info(kafkaConf.toString());
+     parseAsFlumeEvent =
+diff --git a/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java b/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
+index e665431..25b9e40 100644
+--- a/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
++++ b/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
+@@ -35,6 +35,8 @@ import org.apache.flume.event.EventBuilder;
+ import org.apache.flume.sink.kafka.util.TestUtil;
+ import org.junit.*;
+ 
++import static org.apache.flume.channel.kafka.KafkaChannelConfiguration.*;
++
+ import java.util.*;
+ import java.util.concurrent.*;
+ import java.util.concurrent.atomic.AtomicBoolean;
+@@ -149,6 +151,22 @@ public class TestKafkaChannel {
+     channel.stop();
+   }
+ 
++  @Test
++  public void testTimeoutConfig() throws Exception {
++    Context context = prepareDefaultContext(true);
++    KafkaChannel channel = new KafkaChannel();
++    Configurables.configure(channel, context);
++    Assert.assertTrue(channel.getKafkaConf().get(CONSUMER_TIMEOUT)
++      .equals(DEFAULT_TIMEOUT));
++
++    String timeout = "1000";
++    context.put("kafka."+CONSUMER_TIMEOUT, timeout);
++    channel = new KafkaChannel();
++    Configurables.configure(channel, context);
++    Assert.assertTrue(channel.getKafkaConf().get(CONSUMER_TIMEOUT)
++            .equals(timeout));
++  }
++
+   /**
+    * This method starts a channel, puts events into it. The channel is then
+    * stopped and restarted. Then we check to make sure if all events we put
+-- 
+1.7.9.5
+

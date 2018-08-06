@@ -1,0 +1,28 @@
+From 150f5c4df4596163695477496c560c1c01435501 Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Wed, 18 Nov 2015 07:37:01 -0800
+Subject: [PATCH 28/37] FLUME-2841: Upgrade commons-collections to 3.2.2
+
+(Hari Shreedharan via Jarek Jarcec Cecho)
+
+Change-Id: If6cca667adae85a5a56d95995a639ddf1d821a89
+---
+ pom.xml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pom.xml b/pom.xml
+index 3190f61..2a53925 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1134,7 +1134,7 @@ limitations under the License.
+       <dependency>
+         <groupId>commons-collections</groupId>
+         <artifactId>commons-collections</artifactId>
+-        <version>3.2.1</version>
++        <version>3.2.2</version>
+       </dependency>
+ 
+       <dependency>
+-- 
+1.7.9.5
+

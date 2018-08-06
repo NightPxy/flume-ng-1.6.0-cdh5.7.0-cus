@@ -1,0 +1,35 @@
+From 8d7822d4f720d9b53c8f68778017363ed463476a Mon Sep 17 00:00:00 2001
+From: Johny Rufus <johnyrufus@apache.org>
+Date: Mon, 21 Sep 2015 13:43:50 -0700
+Subject: [PATCH 22/37] FLUME-2095. JMS source with TIBCO
+
+(Michelle Casbon via Johny Rufus)
+---
+ .../org/apache/flume/source/jms/JMSSource.java     |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/flume-ng-sources/flume-jms-source/src/main/java/org/apache/flume/source/jms/JMSSource.java b/flume-ng-sources/flume-jms-source/src/main/java/org/apache/flume/source/jms/JMSSource.java
+index 1d7f60f..c1cc9cf 100644
+--- a/flume-ng-sources/flume-jms-source/src/main/java/org/apache/flume/source/jms/JMSSource.java
++++ b/flume-ng-sources/flume-jms-source/src/main/java/org/apache/flume/source/jms/JMSSource.java
+@@ -220,6 +220,17 @@ public class JMSSource extends AbstractPollableSource {
+           initialContextFactoryName);
+       contextProperties.setProperty(
+           javax.naming.Context.PROVIDER_URL, providerUrl);
++
++      // Provide properties for connecting via JNDI
++      if (this.userName.isPresent()) {
++        contextProperties.setProperty(
++    	    javax.naming.Context.SECURITY_PRINCIPAL, this.userName.get());
++      }
++      if (this.password.isPresent()) {
++        contextProperties.setProperty(
++    	    javax.naming.Context.SECURITY_CREDENTIALS, this.password.get());
++      }
++
+       initialContext = initialContextFactory.create(contextProperties);
+     } catch (NamingException e) {
+       throw new FlumeException(String.format(
+-- 
+1.7.9.5
+

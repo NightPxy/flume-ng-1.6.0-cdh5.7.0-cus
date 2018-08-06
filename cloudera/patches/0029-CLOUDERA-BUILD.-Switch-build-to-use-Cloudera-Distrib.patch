@@ -1,0 +1,128 @@
+From 657507bd66715165c6079c1dab22056360459ab4 Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Thu, 11 Feb 2016 15:53:10 -0800
+Subject: [PATCH 29/37] CLOUDERA-BUILD. Switch build to use Cloudera
+ Distribution of Kafka 2.0
+
+Change-Id: I5a2f667ab8f1c5268c71d8502f68ecf52510365f
+CDH-31716: Flume should depend on CDH Kafka and not on Apache Kafka
+---
+ .../flume/channel/kafka/TestKafkaChannel.java      |   13 +++++--------
+ .../apache/flume/sink/kafka/util/KafkaLocal.java   |    2 +-
+ .../source/kafka/KafkaSourceEmbeddedKafka.java     |   10 ++++------
+ pom.xml                                            |    4 ++--
+ 4 files changed, 12 insertions(+), 17 deletions(-)
+
+diff --git a/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java b/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
+index 25b9e40..d909984 100644
+--- a/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
++++ b/flume-ng-channels/flume-kafka-channel/src/test/java/org/apache/flume/channel/kafka/TestKafkaChannel.java
+@@ -25,6 +25,7 @@ import kafka.javaapi.producer.Producer;
+ import kafka.producer.KeyedMessage;
+ import kafka.producer.ProducerConfig;
+ import kafka.utils.ZKStringSerializer$;
++import kafka.utils.ZkUtils;
+ import org.I0Itec.zkclient.ZkClient;
+ import org.apache.commons.lang.RandomStringUtils;
+ import org.apache.flume.Context;
+@@ -415,22 +416,18 @@ public class TestKafkaChannel {
+     int numPartitions = 5;
+     int sessionTimeoutMs = 10000;
+     int connectionTimeoutMs = 10000;
+-    ZkClient zkClient = new ZkClient(testUtil.getZkUrl(),
+-      sessionTimeoutMs, connectionTimeoutMs,
+-      ZKStringSerializer$.MODULE$);
++    ZkUtils zkUtils = ZkUtils.apply(testUtil.getZkUrl(), sessionTimeoutMs, connectionTimeoutMs, false);
+ 
+     int replicationFactor = 1;
+     Properties topicConfig = new Properties();
+-    AdminUtils.createTopic(zkClient, topicName, numPartitions,
++    AdminUtils.createTopic(zkUtils, topicName, numPartitions,
+       replicationFactor, topicConfig);
+   }
+ 
+   public static void deleteTopic(String topicName) {
+     int sessionTimeoutMs = 10000;
+     int connectionTimeoutMs = 10000;
+-    ZkClient zkClient = new ZkClient(testUtil.getZkUrl(),
+-      sessionTimeoutMs, connectionTimeoutMs,
+-      ZKStringSerializer$.MODULE$);
+-    AdminUtils.deleteTopic(zkClient, topicName);
++    ZkUtils zkUtils = ZkUtils.apply(testUtil.getZkUrl(), sessionTimeoutMs, connectionTimeoutMs, false);
++    AdminUtils.deleteTopic(zkUtils, topicName);
+   }
+ }
+diff --git a/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/util/KafkaLocal.java b/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/util/KafkaLocal.java
+index 3c6e064..d7d65ba 100644
+--- a/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/util/KafkaLocal.java
++++ b/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/util/KafkaLocal.java
+@@ -35,7 +35,7 @@ public class KafkaLocal {
+ 
+     public KafkaLocal(Properties kafkaProperties) throws IOException,
+         InterruptedException{
+-        KafkaConfig kafkaConfig = new KafkaConfig(kafkaProperties);
++        KafkaConfig kafkaConfig = new KafkaConfig(kafkaProperties, true);
+ 
+         //start local kafka broker
+         kafka = new KafkaServerStartable(kafkaConfig);
+diff --git a/flume-ng-sources/flume-kafka-source/src/test/java/org/apache/flume/source/kafka/KafkaSourceEmbeddedKafka.java b/flume-ng-sources/flume-kafka-source/src/test/java/org/apache/flume/source/kafka/KafkaSourceEmbeddedKafka.java
+index 26c5c9d..dc08fe9 100644
+--- a/flume-ng-sources/flume-kafka-source/src/test/java/org/apache/flume/source/kafka/KafkaSourceEmbeddedKafka.java
++++ b/flume-ng-sources/flume-kafka-source/src/test/java/org/apache/flume/source/kafka/KafkaSourceEmbeddedKafka.java
+@@ -22,6 +22,7 @@ import kafka.javaapi.producer.Producer;
+ import kafka.producer.KeyedMessage;
+ import kafka.producer.ProducerConfig;
+ import kafka.admin.AdminUtils;
++import kafka.utils.ZkUtils;
+ import org.I0Itec.zkclient.ZkClient;
+ import kafka.utils.ZKStringSerializer$;
+ 
+@@ -39,7 +40,7 @@ public class KafkaSourceEmbeddedKafka {
+     Properties props = new Properties();
+     props.put("zookeeper.connect",zookeeper.getConnectString());
+     props.put("broker.id","1");
+-    KafkaConfig config = new KafkaConfig(props);
++    KafkaConfig config = new KafkaConfig(props, true);
+     kafkaServer = new KafkaServerStartable(config);
+     kafkaServer.startup();
+     initProducer();
+@@ -78,15 +79,12 @@ public class KafkaSourceEmbeddedKafka {
+     // Create a ZooKeeper client
+     int sessionTimeoutMs = 10000;
+     int connectionTimeoutMs = 10000;
+-    ZkClient zkClient = new ZkClient(zookeeper.getConnectString(),
+-            sessionTimeoutMs, connectionTimeoutMs,
+-            ZKStringSerializer$.MODULE$);
++    ZkUtils zkUtils = ZkUtils.apply(zookeeper.getConnectString(), sessionTimeoutMs, connectionTimeoutMs, false);
+ 
+     int numPartitions = 1;
+     int replicationFactor = 1;
+     Properties topicConfig = new Properties();
+-    AdminUtils.createTopic(zkClient, topicName, numPartitions,
+-            replicationFactor, topicConfig);
++    AdminUtils.createTopic(zkUtils, topicName, numPartitions, replicationFactor, topicConfig);
+   }
+ 
+ }
+diff --git a/pom.xml b/pom.xml
+index 2a53925..9a84947 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1458,12 +1458,12 @@ limitations under the License.
+       <dependency>
+         <groupId>org.apache.kafka</groupId>
+         <artifactId>kafka_2.10</artifactId>
+-        <version>0.8.1.1</version>
++        <version>${cdh.kafka.version}</version>
+       </dependency>
+       <dependency>
+         <groupId>org.apache.kafka</groupId>
+         <artifactId>kafka_2.10</artifactId>
+-        <version>0.8.1.1</version>
++        <version>${cdh.kafka.version}</version>
+         <classifier>test</classifier>
+         <scope>test</scope>
+       </dependency>
+-- 
+1.7.9.5
+

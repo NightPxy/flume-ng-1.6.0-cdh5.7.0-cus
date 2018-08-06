@@ -1,0 +1,26 @@
+From e8301c7933f8fa9b66e8e097dc7156f077895ea6 Mon Sep 17 00:00:00 2001
+From: Johny Rufus <johnyrufus@apache.org>
+Date: Wed, 29 Jul 2015 15:02:33 -0700
+Subject: [PATCH 12/37] FLUME-2660. Add documentation for EventValidator.
+ Fixed doc formatting issue
+
+(Ashish Paliwal via Johny Rufus)
+---
+ flume-ng-doc/sphinx/FlumeUserGuide.rst |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/flume-ng-doc/sphinx/FlumeUserGuide.rst b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+index df43cca..8e5487d 100644
+--- a/flume-ng-doc/sphinx/FlumeUserGuide.rst
++++ b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+@@ -3791,6 +3791,7 @@ Let's see an example of simple size based Event Validator, which shall reject ev
+ than maximum size specified.
+ 
+ .. code-block:: java
++
+   public static class MyEventValidator implements EventValidator {
+ 
+     private int value = 0;
+-- 
+1.7.9.5
+

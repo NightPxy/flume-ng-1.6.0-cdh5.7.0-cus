@@ -1,0 +1,46 @@
+From d0602620703d0e5e112e542f466265af4dc9dac1 Mon Sep 17 00:00:00 2001
+From: Johny Rufus <johnyrufus@apache.org>
+Date: Wed, 21 Oct 2015 15:18:42 -0700
+Subject: [PATCH 36/37] FLUME-2632: High CPU on KafkaSink
+
+(Ashish Paliwal via Johny Rufus)
+
+Change-Id: I5d11cc706db424c560fdd9f4945a34529897f8f9
+---
+ .../org/apache/flume/sink/kafka/KafkaSink.java     |    6 ++++++
+ .../org/apache/flume/sink/kafka/TestKafkaSink.java |    2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/flume-ng-sinks/flume-ng-kafka-sink/src/main/java/org/apache/flume/sink/kafka/KafkaSink.java b/flume-ng-sinks/flume-ng-kafka-sink/src/main/java/org/apache/flume/sink/kafka/KafkaSink.java
+index eada17c..38b854b 100644
+--- a/flume-ng-sinks/flume-ng-kafka-sink/src/main/java/org/apache/flume/sink/kafka/KafkaSink.java
++++ b/flume-ng-sinks/flume-ng-kafka-sink/src/main/java/org/apache/flume/sink/kafka/KafkaSink.java
+@@ -98,6 +98,12 @@ public class KafkaSink extends AbstractSink implements Configurable {
+ 
+         if (event == null) {
+           // no events available in channel
++          if(processedEvents == 0) {
++            result = Status.BACKOFF;
++            counter.incrementBatchEmptyCount();
++          } else {
++            counter.incrementBatchUnderflowCount();
++          }
+           break;
+         }
+ 
+diff --git a/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/TestKafkaSink.java b/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/TestKafkaSink.java
+index 80f764f..72117b1 100644
+--- a/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/TestKafkaSink.java
++++ b/flume-ng-sinks/flume-ng-kafka-sink/src/test/java/org/apache/flume/sink/kafka/TestKafkaSink.java
+@@ -168,7 +168,7 @@ public class TestKafkaSink {
+     kafkaSink.start();
+ 
+     Sink.Status status = kafkaSink.process();
+-    if (status == Sink.Status.BACKOFF) {
++    if (status != Sink.Status.BACKOFF) {
+       fail("Error Occurred");
+     }
+     assertNull(
+-- 
+1.7.9.5
+

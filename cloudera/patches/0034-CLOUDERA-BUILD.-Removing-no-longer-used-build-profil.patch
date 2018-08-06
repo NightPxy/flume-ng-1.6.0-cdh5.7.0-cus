@@ -1,0 +1,25 @@
+From 48f0991b60cd3e87fd9ae18ee23169f1e6934011 Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Sun, 14 Feb 2016 11:46:15 -0800
+Subject: [PATCH 34/37] CLOUDERA-BUILD. Removing no longer used build profile
+ from pre-commit hook
+
+Change-Id: Ie7c541b85517ee40047ea154a6cd2b74a2b0eab6
+CDH-37246: Flume tests are regularly failing on HBase tests
+---
+ cloudera/pre_commit_hook.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cloudera/pre_commit_hook.sh b/cloudera/pre_commit_hook.sh
+index e5c82e6..a2028e8 100644
+--- a/cloudera/pre_commit_hook.sh
++++ b/cloudera/pre_commit_hook.sh
+@@ -3,4 +3,4 @@ export JAVA7_BUILD=true
+ . /opt/toolchain/toolchain.sh
+ 
+ export MAVEN_OPTS="-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m"
+-mvn clean test -Dhadoop.profile=hbase-98
++mvn clean test
+-- 
+1.7.9.5
+

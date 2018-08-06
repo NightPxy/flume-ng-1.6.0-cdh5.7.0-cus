@@ -1,0 +1,32 @@
+From 1324da41cd895950ab69eb2dfcd8ce0eea519558 Mon Sep 17 00:00:00 2001
+From: Jarek Jarcec Cecho <jarcec@apache.org>
+Date: Tue, 14 Jul 2015 09:29:30 -0700
+Subject: [PATCH 08/37] FLUME-2737: Documentation for Pollable Source config
+ parameters introduced in FLUME-2729
+
+(Ted Malaska via Jarek Jarcec Cecho)
+---
+ flume-ng-doc/sphinx/FlumeUserGuide.rst |    7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/flume-ng-doc/sphinx/FlumeUserGuide.rst b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+index 8bc1d19..4b63b14 100644
+--- a/flume-ng-doc/sphinx/FlumeUserGuide.rst
++++ b/flume-ng-doc/sphinx/FlumeUserGuide.rst
+@@ -1152,6 +1152,13 @@ Property Name                    Default      Description
+ batchSize                        1000         Maximum number of messages written to Channel in one batch
+ batchDurationMillis              1000         Maximum time (in ms) before a batch will be written to Channel
+                                               The batch will be written whenever the first of size and time will be reached.
++backoffSleepIncrement            1000         Initial and incremental wait time that is triggered when a Kafka Topic appears to be empty.
++                                              Wait period will reduce aggressive pinging of an empty Kafka Topic.  One second is ideal for
++                                              ingestion use cases but a lower value may be required for low latency operations with
++                                              interceptors.
++maxBackoffSleep                  5000         Maximum wait time that is triggered when a Kafka Topic appears to be empty.  Five seconds is
++                                              ideal for ingestion use cases but a lower value may be required for low latency operations
++                                              with interceptors.
+ Other Kafka Consumer Properties  --           These properties are used to configure the Kafka Consumer. Any producer property supported
+                                               by Kafka can be used. The only requirement is to prepend the property name with the prefix ``kafka.``.
+                                               For example: kafka.consumer.timeout.ms
+-- 
+1.7.9.5
+
