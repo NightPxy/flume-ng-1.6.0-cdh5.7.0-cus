@@ -55,6 +55,21 @@ import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 public class HDFSEventSink extends AbstractSink implements Configurable {
+
+  //自定义路径格式化
+  private static Set<String> acceptCusPathSuffixs =  null;
+  private static Set<String> acceptCusFilePrefix = null;
+  static {
+    acceptCusPathSuffixs = new HashSet<String>();
+    acceptCusPathSuffixs.add("yyyyMM");
+    acceptCusPathSuffixs.add("yyyyMMdd");
+    acceptCusPathSuffixs.add("yyyyMMddHH");
+    acceptCusPathSuffixs.add("yyyyMMddHHmm");
+
+    acceptCusFilePrefix =  new HashSet<String>();
+    acceptCusFilePrefix.add("host-HHmm");
+  }
+
   public interface WriterCallback {
     public void run(String filePath);
   }
@@ -372,20 +387,32 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
           break;
         }
 
+
+        //获取Event时间戳 来自header或自动取当前时间
+        long ts = clock.currentTimeMillis();
+        if(!useLocalTime) {
+          String timestampHeader = event.getHeaders().get("timestamp");
+          Preconditions.checkNotNull(timestampHeader, "Expected timestamp in " +
+                  "the Flume event headers, but it was null");
+          ts = Long.valueOf(timestampHeader);
+        }
+
         String realPath = "";
 
         //尝试获取自定义hdfs-path后缀
-        String cusPathSuffix = this.context.getString("hdfs.pathSuffix");
+        String cusPathSuffix = this.context.getString("hdfs.cusPathSuffix");
         if(null != cusPathSuffix && cusPathSuffix.length() > 0 )
         {
           //发现自定义路径后缀,自定义优先 最终路径=hdfs.path+自定义后缀
           //自定义路径的目的是 完全避开正则匹配以提升效率
           //自定义路径后缀 仅支持 yyyyMM yyyyMMdd  yyyyMMddHH  yyyyMMddHHmm
-          Set<String> acceptCusPathSuffixs = new HashSet<String>();
           if(acceptCusPathSuffixs.contains(cusPathSuffix))
           {
             SimpleDateFormat pathSuffixDateFormat = new SimpleDateFormat(cusPathSuffix);
-            realPath = filePath + DIRECTORY_DELIMITER + pathSuffixDateFormat
+            realPath = filePath + DIRECTORY_DELIMITER + pathSuffixDateFormat.format(ts);
+          }
+          else{
+            throw new Error("未收支持的hdfs.pathSuffix:"+cusPathSuffix);
           }
         }
         else
@@ -395,15 +422,21 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
                   timeZone, needRounding, roundUnit, roundValue, useLocalTime);
         }
 
+        String realName = "";
 
-        //路径的自定义后缀 realPath=hdfs.path+pathSuffix
+        String filePrefix = this.context.getString("hdfs.cusFilePrefix");
+        if(null != filePrefix && filePrefix.length() > 0)
+        {
 
-        String filePrefix = this.context.getString("hdfs.filePrefix");
+        }
+        else
+        {
+          //原始文件名生成逻辑
+          realName = BucketPath.escapeString(fileName, event.getHeaders(),
+                  timeZone, needRounding, roundUnit, roundValue, useLocalTime);
+        }
 
         // reconstruct the path name by substituting place holders
-
-        String realName = BucketPath.escapeString(fileName, event.getHeaders(),
-          timeZone, needRounding, roundUnit, roundValue, useLocalTime);
 
         String lookupPath = realPath + DIRECTORY_DELIMITER + realName;
         BucketWriter bucketWriter;
