@@ -19,12 +19,8 @@
 package org.apache.flume.sink.hdfs;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -376,9 +372,36 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
           break;
         }
 
+        String realPath = "";
+
+        //尝试获取自定义hdfs-path后缀
+        String cusPathSuffix = this.context.getString("hdfs.pathSuffix");
+        if(null != cusPathSuffix && cusPathSuffix.length() > 0 )
+        {
+          //发现自定义路径后缀,自定义优先 最终路径=hdfs.path+自定义后缀
+          //自定义路径的目的是 完全避开正则匹配以提升效率
+          //自定义路径后缀 仅支持 yyyyMM yyyyMMdd  yyyyMMddHH  yyyyMMddHHmm
+          Set<String> acceptCusPathSuffixs = new HashSet<String>();
+          if(acceptCusPathSuffixs.contains(cusPathSuffix))
+          {
+            SimpleDateFormat pathSuffixDateFormat = new SimpleDateFormat(cusPathSuffix);
+            realPath = filePath + DIRECTORY_DELIMITER + pathSuffixDateFormat
+          }
+        }
+        else
+        {
+          //原始逻辑
+          realPath = BucketPath.escapeString(filePath, event.getHeaders(),
+                  timeZone, needRounding, roundUnit, roundValue, useLocalTime);
+        }
+
+
+        //路径的自定义后缀 realPath=hdfs.path+pathSuffix
+
+        String filePrefix = this.context.getString("hdfs.filePrefix");
+
         // reconstruct the path name by substituting place holders
-        String realPath = BucketPath.escapeString(filePath, event.getHeaders(),
-            timeZone, needRounding, roundUnit, roundValue, useLocalTime);
+
         String realName = BucketPath.escapeString(fileName, event.getHeaders(),
           timeZone, needRounding, roundUnit, roundValue, useLocalTime);
 
