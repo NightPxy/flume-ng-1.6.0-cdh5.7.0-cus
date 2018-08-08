@@ -58,16 +58,12 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
 
   //自定义路径格式化
   private static Set<String> acceptCusPathSuffixs =  null;
-  private static Set<String> acceptCusFilePrefix = null;
   static {
     acceptCusPathSuffixs = new HashSet<String>();
     acceptCusPathSuffixs.add("yyyyMM");
     acceptCusPathSuffixs.add("yyyyMMdd");
     acceptCusPathSuffixs.add("yyyyMMddHH");
     acceptCusPathSuffixs.add("yyyyMMddHHmm");
-
-    acceptCusFilePrefix =  new HashSet<String>();
-    acceptCusFilePrefix.add("host-HHmm");
   }
 
   public interface WriterCallback {
@@ -389,7 +385,7 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
 
 
         //获取Event时间戳 来自header或自动取当前时间
-        long ts = clock.currentTimeMillis();
+        long ts = new SystemClock().currentTimeMillis();
         if(!useLocalTime) {
           String timestampHeader = event.getHeaders().get("timestamp");
           Preconditions.checkNotNull(timestampHeader, "Expected timestamp in " +
@@ -412,7 +408,7 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
             realPath = filePath + DIRECTORY_DELIMITER + pathSuffixDateFormat.format(ts);
           }
           else{
-            throw new Error("未收支持的hdfs.pathSuffix:"+cusPathSuffix);
+            throw new Error("未受支持的hdfs.cusPathSuffix:"+cusPathSuffix);
           }
         }
         else
@@ -424,10 +420,22 @@ public class HDFSEventSink extends AbstractSink implements Configurable {
 
         String realName = "";
 
-        String filePrefix = this.context.getString("hdfs.cusFilePrefix");
-        if(null != filePrefix && filePrefix.length() > 0)
+        String cusFilePrefix = this.context.getString("hdfs.cusFilePrefix");
+        if(null != cusFilePrefix && cusFilePrefix.length() > 0)
         {
+          String tryGetHostName= event.getHeaders().get("host");
+          if(tryGetHostName == null)
+          {
+            tryGetHostName = "";
+          }
 
+          if(cusFilePrefix.equals("host-HHmm")){
+            SimpleDateFormat pathSuffixDateFormat = new SimpleDateFormat("HHmm");
+            realName = tryGetHostName + "-"+ pathSuffixDateFormat.format(ts);
+          }
+          else {
+            throw new Error("未受支持的hdfs.cusFilePrefix:"+cusFilePrefix);
+          }
         }
         else
         {

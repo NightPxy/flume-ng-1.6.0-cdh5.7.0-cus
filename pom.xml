@@ -26,7 +26,7 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.flume</groupId>
   <artifactId>flume-parent</artifactId>
-  <version>1.6.0-cdh5.7.0</version>
+  <version>1.6.0-cdh5.7.0-cus</version>
   <packaging>pom</packaging>
 
   <name>Apache Flume</name>
@@ -47,7 +47,7 @@ limitations under the License.
 
     <avro.version>${cdh.avro.version}</avro.version>
     <elasticsearch.version>0.90.1</elasticsearch.version>
-    <javaVersion>1.7</javaVersion>
+    <javaVersion>1.8</javaVersion>
     
     <kite.version>1.0.0</kite.version>
 
@@ -1559,7 +1559,7 @@ limitations under the License.
               <report>project-team</report>
               <report>mailing-list</report>
               <report>issue-tracking</report>
-              <report>license</report>
+              <!--<report>license</report>-->
 <!-- for now
               <report>modules</report>
               <report>dependencies</report>

@@ -29,7 +29,7 @@
     <format>tar.gz</format>
   </formats>
 
-  <baseDirectory>apache-flume-${project.version}-src</baseDirectory>
+  <baseDirectory>apache-flume-${project.version}-src-cus</baseDirectory>
 
   <moduleSets>
 
