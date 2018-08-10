@@ -34,7 +34,17 @@ public enum ChannelSelectorType {
   /**
    * Multiplexing channel selector.
    */
-  MULTIPLEXING("org.apache.flume.channel.MultiplexingChannelSelector");
+  MULTIPLEXING("org.apache.flume.channel.MultiplexingChannelSelector"),
+
+  /**
+   * FailoverChannel channel selector.
+   */
+  FAILOVER("org.apache.flume.channel.FailoverChannelSelector"),
+
+  /**
+   * LoadBalance channel selector.
+   */
+  LOADBALANCE("org.apache.flume.channel.LoadBalanceChannelSelector");
 
   private final String channelSelectorClassName;
 
