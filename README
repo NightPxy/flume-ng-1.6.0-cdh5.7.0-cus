@@ -1,3 +1,34 @@
+
+# 增加两种通道选择器 
+
+增加两种自定义通道选择器,以应对大数据量到单个MemoryChannel扛不住的情况
+
+## LoadBalanceChannelSelector  负载均衡选择器 
+
+```
+## 批次Event分割为N块(N=通道列表数),分别提交通道列表,某个通道失败将尝试将批次块转提其它通道,全部失败时抛出
+cus-test-agent.sources.r1.selector.type = org.apache.flume.channel.LoadBalanceChannelSelector
+## 轮播通道列表
+cus-test-agent.sources.r1.selector.split = c1 c2 c3
+## 轮播策略(String) robin=顺序轮播(默认) random=随机轮播
+cus-test-agent.sources.r1.selector.lbt=robin
+```
+
+## FailoverChannelSelector 通道容错选择器
+
+```
+## 以整个批次为单位轮播尝试通道列表,有一个处理成功即完毕,全部失败将抛出异常FlumeException
+#cus-test-agent.sources.r1.selector.type = org.apache.flume.channel.FailoverChannelSelector
+## 轮播通道列表
+#cus-test-agent.sources.r1.selector.split = c1 c2 c3
+## 轮播策略(String) robin=顺序轮播(默认) random=随机轮播
+#cus-test-agent.sources.r1.selector.lbt=robin
+```
+
+
+
+*********************************************************************
+# 初始化
 flume-ng-1.6.0-cdh5.7.0 的自改版本
 原谅我没有fork,这个版本实在太古老,CDH的git都找不到这个分支了
 ...
